@@ -6,7 +6,11 @@ streamlit.title('Zena\'s Amazing Athleisure Catalog')
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("select color_or_style from zenas_athleisure_db.products.catalog_for_website")
-my_data_row = my_cur.fetchone()
-streamlit.text("Hello from Snowflake:")
-streamlit.text(my_data_row)
-               
+my_catalog = my_cur.fetchall()
+# put the dafta into a dataframe
+df = pandas.DataFrame(my_catalog)
+# temp write the dataframe to the page so I Can see what I am working with
+# streamlit.write(df)
+# put the first column into a list
+color_list = df[0].values.tolist()
+# print(color_list)
